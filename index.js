@@ -1,17 +1,15 @@
 require('dotenv').config()
 const { Telegraf, Markup } = require("telegraf");
 const bot = new Telegraf(process.env.TOKEN)
+const startCommands = "/start" || "/start@Pravda_deystviya_bot" || "start" || "Го п или д"
 
-
-bot.hears("/start", ctx => {
+bot.hears(/\/start|start|Го п или д|\/start@Pravda_deyatviya_bot/g, ctx => {
     const chatId = ctx.chat.id
     const first_name = ctx.message.from.first_name
     const userid = ctx.message.from.id
     const username = ctx.message.from.username
     const user = `[${ctx.message.from.first_name}](tg://user?id=${ctx.message.from.id})`
     ctx.deleteMessage();
-
-
     ctx.telegram.sendPhoto(
         chatId,
         { source: './photos/photoStart.png' },
@@ -25,7 +23,6 @@ bot.hears("/start", ctx => {
             }, parse_mode: 'MarkdownV2'
         }
     )
-
     console.log(ctx.chat);
 })
 
@@ -38,6 +35,7 @@ bot.action("Truht", (ctx) => {
             caption: 'Как вы назвали вашего первого ребёнка ?!\n(Мальчик,девушка)', reply_markup: {
                 inline_keyboard: [
                     [{ text: "🤯 Действия", callback_data: "Dare" }],
+                    [{ text: "🔝 Главное", callback_data: "/start" }],
                     [{ text: "🔜 Следующий ", callback_data: "nextT" }]
                 ]
             }
@@ -55,6 +53,7 @@ bot.action("Dare", (ctx) => {
             caption: 'Скажи ЛП/ЛД что ты выиграл 100.000сум.Потом скажи это оказывается не ты.', reply_markup: {
                 inline_keyboard: [
                     [{ text: "🙈 Правда", callback_data: "Truht" }],
+                    [{ text: "🔝 Главное", callback_data: "/start" }],
                     [{ text: "🔜 Следующий", callback_data: "nextD" }]
                 ]
             }
@@ -73,6 +72,7 @@ bot.action("Random", (ctx) => {
                 caption: 'Как вы назвали вашего первого ребёнка ?!\n(Мальчик,девушка)', reply_markup: {
                     inline_keyboard: [
                         [{ text: "🤯 Действия", callback_data: "Dare" }],
+                        [{ text: "🔝 Главное", callback_data: "/start" }],
                         [{ text: "🔜 Следующий ", callback_data: "nextT" }]
                     ]
                 }
@@ -88,16 +88,14 @@ bot.action("Random", (ctx) => {
                 caption: 'Скажи ЛП/ЛД что ты выиграл 100.000сум.Потом скажи это оказывается не ты.', reply_markup: {
                     inline_keyboard: [
                         [{ text: "🙈 Правда", callback_data: "Truht" }],
+                        [{ text: "🔝 Главное", callback_data: "/start" }],
                         [{ text: "🔜 Следующий", callback_data: "nextD" }]
                     ]
                 }
             }
         )
-
-        // ctx.reply('Dare', Markup.inlineKeyboard([Markup.button.callback("Dare")]))
     }
 });
-
 
 
 
