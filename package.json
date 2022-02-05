@@ -1,0 +1,25 @@
+{
+  "name": "truth-or-dare",
+  "version": "1.0.0",
+  "description": "",
+  "main": "inedex.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UZBase/truth-or-dare.git"
+  },
+  "author": "Umarjon Sharofiddinov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UZBase/truth-or-dare/issues"
+  },
+  "homepage": "https://github.com/UZBase/truth-or-dare#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "nodemon": "^2.0.15",
+    "telegraf": "^4.7.0"
+  }
+}
