@@ -1,7 +1,6 @@
 require('dotenv').config()
 const { Telegraf } = require("telegraf");
 const bot = new Telegraf(process.env.TOKEN)
-const M = require("telegraf-markupk94-ts")
 
 bot.hears("/start", ctx => {
     const chatId = ctx.chat.id
@@ -10,7 +9,7 @@ bot.hears("/start", ctx => {
     ctx.deleteMessage();
     ctx.telegram.sendPhoto(
         chatId,
-        { source: './photos/startImg.jpg' },
+        { source: './photos/photoStart.png' },
         {
             caption: `Добро пожаловать 🥳@${username} \nВ боте нет глупых вопросов и скучных заданий 😈\nПриятной игры ♥️ `, reply_markup: {
                 inline_keyboard: [
