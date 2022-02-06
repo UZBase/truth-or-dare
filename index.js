@@ -151,7 +151,7 @@ bot.action("Truht", (ctx) => {
         }
     )
 });
-bot.action(/^ nextT: (\d + ) $ /, async(ctx) => {
+bot.action(/next:(\d+)/, async(ctx) => {
     await ctx.answerCbQuery();
     const element = +ctx.match[0].split(':')[1];
     const nextElement = element + 1
