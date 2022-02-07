@@ -151,12 +151,12 @@ bot.action("Truht", (ctx) => {
         }
     )
 });
-bot.action(/next:(\d+)/, async(ctx) => {
+bot.action(/nextT:(\d+)/, async(ctx) => {
     await ctx.answerCbQuery();
     const element = +ctx.match[0].split(':')[1];
     const nextElement = element + 1
 
-    if (nextElement > arr.length) {
+    if (nextElement > QuestionT.length) {
         return ctx.telegram.sendMessage(ctx.chat.id, "Увы!Но вопросы закончились( \nНапишите : @Senior_developper")
     }
     return ctx.telegram.sendPhoto(
