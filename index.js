@@ -171,7 +171,22 @@ bot.action(/nextD:(\d+)/, async(ctx) => {
         }
     )
 })
-
+bot.action("/start", (ctx) => {
+    const chatId = ctx.chat.id
+    ctx.telegram.sendPhoto(
+        chatId, { source: './photos/photoStart.png' }, {
+            caption: `В боте нет глупых вопросов и скучных заданий 😈\nПриятной игры ♥️ `,
+            reply_markup: {
+                inline_keyboard: [
+                    [{ text: "🙈 Правда", callback_data: "Truht" }, { text: "🤯 Действия", callback_data: "Dare" }],
+                    [{ text: "🖇 Случайно", callback_data: "Random" }],
+                    [{ text: "😝 Добавить в группу", url: "https://t.me/Pravda_deystviya_bot?startgroup=new" }],
+                ]
+            },
+            parse_mode: 'MarkdownV2'
+        }
+    )
+})
 
 bot.action("Random", (ctx) => {
     ctx.deleteMessage();
