@@ -5,48 +5,7 @@ const bot = new Telegraf(process.env.TOKEN)
 const QuestionD = [
     "Расскажите алфавит в обратном порядке.",
     "Спойте вашу любимую музыку.(записать в аудио сообщ.)",
-    "Станцуйте танец на видео.",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
+    "Станцуйте танец на видео."
 ]
 const QuestionT = [
     "Как вы назвали вашего первого ребёнка ?!\n(Мальчик,девушка)",
@@ -111,14 +70,12 @@ const QuestionT = [
 
 ]
 
-
 bot.hears(/\/start|start|Го п или д|\/start@Pravda_deyatviya_bot/g, (ctx) => {
     const chatId = ctx.chat.id
     const first_name = ctx.message.from.first_name
     const userid = ctx.message.from.id
     const username = ctx.message.from.username
     const user = `[${ctx.message.from.first_name}](tg://user?id=${ctx.message.from.id})`
-    ctx.deleteMessage();
     ctx.telegram.sendPhoto(
         chatId, { source: './photos/photoStart.png' }, {
             caption: `Добро пожаловать 🥳 ${user} \nВ боте нет глупых вопросов и скучных заданий 😈\nПриятной игры ♥️ `,
@@ -151,6 +108,21 @@ bot.action("Truht", (ctx) => {
         }
     )
 });
+bot.action("Dare", (ctx) => {
+    ctx.deleteMessage();
+    ctx.telegram.sendPhoto(
+        ctx.chat.id, { source: './photos/photoStart.png' }, {
+            caption: QuestionD[0],
+            reply_markup: {
+                inline_keyboard: [
+                    [{ text: "🙈 Правда", callback_data: "Truht" }],
+                    [{ text: "🔝 Главное", callback_data: "/start" }],
+                    [{ text: "🔜 Следующий", callback_data: "nextD:1" }]
+                ]
+            }
+        }
+    )
+});
 bot.action(/nextT:(\d+)/, async(ctx) => {
     await ctx.answerCbQuery();
     const element = +ctx.match[0].split(':')[1];
@@ -175,23 +147,32 @@ bot.action(/nextT:(\d+)/, async(ctx) => {
         }
     )
 })
+bot.action(/nextD:(\d+)/, async(ctx) => {
+    await ctx.answerCbQuery();
+    const element = +ctx.match[0].split(':')[1];
+    const nextElement = element + 1
 
-bot.action("Dare", (ctx) => {
-    ctx.deleteMessage();
-
-    ctx.telegram.sendPhoto(
+    if (nextElement > QuestionD.length) {
+        return ctx.telegram.sendMessage(ctx.chat.id, "Увы!Но вопросы закончились( \nНапишите : @Senior_developper")
+    }
+    return ctx.telegram.sendPhoto(
         ctx.chat.id, { source: './photos/photoStart.png' }, {
-            caption: 'Скажи ЛП/ЛД что ты выиграл 100.000сум.Потом скажи это оказывается не ты.',
+            caption: QuestionD[element],
             reply_markup: {
                 inline_keyboard: [
-                    [{ text: "🙈 Правда", callback_data: "Truht" }],
+                    [{ text: "🤯 Действия", callback_data: "Dare" }],
                     [{ text: "🔝 Главное", callback_data: "/start" }],
-                    [{ text: "🔜 Следующий", callback_data: "nextD" }]
+                    [{
+                        text: "🔜 Следующий ",
+                        callback_data: `nextD:${nextElement}`
+                    }]
                 ]
             }
         }
     )
-});
+})
+
+
 bot.action("Random", (ctx) => {
     ctx.deleteMessage();
 
